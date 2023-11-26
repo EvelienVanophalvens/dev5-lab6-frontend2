@@ -1,7 +1,7 @@
 <script setup>
 import { defineProps, ref, onMounted } from 'vue';
 
-const props = defineProps(['teamName', 'socket']);
+const props = defineProps(['teamName']);
 const score = ref(0);
 const team = ref("");
 
@@ -19,17 +19,25 @@ const socket = new WebSocket('ws://localhost:3000/primus');
     }
     if (newData.action == 'updateTeam' && newData.teamName == teamName) {
         team.value = newData.selectedTeam;
-
+    }
+    if (newData.action == 'updateTimeout' && newData.teamName == teamName) {
+        if(newData.timeout){
+            console.log("timeout");
+            document.querySelector(`#${teamName.toLowerCase()} .timeOut `).innerHTML = "Timeout";
+        } 
     }
   };
 });
 </script>
 
 <template>
-  <div class="scores">
+  <div class="scores" :id="teamName">
     <h2>{{ team }}</h2>
     <div class="score">
       {{ score }}
+    </div>
+    <div class="timeOut" >
+
     </div>
   </div>
 </template>
@@ -43,4 +51,9 @@ const socket = new WebSocket('ws://localhost:3000/primus');
   font-size: 10rem;
   font-weight: bold;
 }
+
+.timeOut {
+    font-size: 3em;
+}
+
 </style>
