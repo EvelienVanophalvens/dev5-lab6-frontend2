@@ -9,7 +9,7 @@ let teamName = props.teamName;
 
 
 onMounted(() => {
-const socket = new WebSocket('wsshttps://lab6-o1wp.onrender.com/primus');
+const socket = new WebSocket('wss://lab6-o1wp.onrender.com/primus');
   // get data from websocket
   socket.onmessage = function (event) {
     let newData = JSON.parse(event.data);
