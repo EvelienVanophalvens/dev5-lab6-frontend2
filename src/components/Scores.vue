@@ -24,7 +24,9 @@ const socket = new WebSocket('ws://localhost:3000/primus');
         if(newData.timeout){
             console.log("timeout");
             document.querySelector(`#${teamName.toLowerCase()} .timeOut `).innerHTML = "Timeout";
-        } 
+        }else{
+            document.querySelector(`#${teamName.toLowerCase()} .timeOut `).innerHTML = "";
+        }
     }
   };
 });
