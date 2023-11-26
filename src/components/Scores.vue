@@ -3,25 +3,23 @@ import { defineProps, ref, onMounted } from 'vue';
 
 const props = defineProps(['teamName', 'socket']);
 const score = ref(0);
+const team = ref("");
 
 let teamName = props.teamName;
-
 
 
 onMounted(() => {
 const socket = new WebSocket('ws://localhost:3000/primus');
   // get data from websocket
   socket.onmessage = function (event) {
-    console.log('Teamname:', teamName);
     let newData = JSON.parse(event.data);
-    if(teamName === teamName){
-        console.log("this team " + teamName);
-    }
-    if (newData.action == 'updatePoints') {
-      if (newData.teamName == teamName) {
+    console.log(newData);
+    if (newData.action == 'updatePoints' && newData.teamName == teamName) {
         score.value = newData.points;
+    }
+    if (newData.action == 'updateTeam' && newData.teamName == teamName) {
+        team.value = newData.selectedTeam;
 
-      }
     }
   };
 });
@@ -29,8 +27,7 @@ const socket = new WebSocket('ws://localhost:3000/primus');
 
 <template>
   <div class="scores">
-    <h2>{{ teamName }}</h2>
-    <p>Sporting Wolvertem</p>
+    <h2>{{ team }}</h2>
     <div class="score">
       {{ score }}
     </div>
