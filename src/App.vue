@@ -1,14 +1,13 @@
 <script setup>
 import Scores from './components/Scores.vue';
-import Socket from './components/Websocket.js';
 
 </script>
 
 <template>
         <h1>Scoreboard</h1>
         <div class="scoreboard">
-            <Scores teamName="team1" id="team1" :socket="Socket"/>
-            <Scores teamName="team2" id="team2" :socket="Socket"/>
+            <Scores teamName="team1" id="team1"/>
+            <Scores teamName="team2" id="team2"/>
         </div>
     
 </template>
